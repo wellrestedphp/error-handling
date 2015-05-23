@@ -1,0 +1,31 @@
+{
+    "name": "wellrested/http-exception-catcher",
+    "description": "Convert exceptions thrown in middleware into responses",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "PJ Dietz",
+            "email": "pjdietz@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/wellrestedphp/http-exceptions"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "wellrested/wellrested": "dev-master",
+        "wellrested/http-exceptions": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "WellRESTed\\HttpExceptions\\" : "src/"
+        }
+    }
+}
