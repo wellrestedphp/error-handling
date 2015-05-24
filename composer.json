@@ -1,5 +1,5 @@
 {
-    "name": "wellrested/http-exception-catcher",
+    "name": "wellrested/catcher",
     "description": "Convert exceptions thrown in middleware into responses",
     "license": "MIT",
     "type": "library",
