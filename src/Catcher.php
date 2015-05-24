@@ -1,14 +1,15 @@
 <?php
 
-namespace WellRESTed\HttpExceptions;
+namespace WellRESTed\Middleware;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WellRESTed\Dispatching\DispatchStack;
+use WellRESTed\HttpExceptions\HttpException;
 use WellRESTed\Message\Stream;
 
-class HttpExceptionCatcher extends DispatchStack
+class Catcher extends DispatchStack
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
