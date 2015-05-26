@@ -1,5 +1,5 @@
 {
-    "name": "wellrested/catcher",
+    "name": "wellrested/error-handling",
     "description": "Convert exceptions thrown in middleware into responses",
     "license": "MIT",
     "type": "library",
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WellRESTed\\Middleware\\" : "src/"
+            "WellRESTed\\" : "src/"
         }
     }
 }

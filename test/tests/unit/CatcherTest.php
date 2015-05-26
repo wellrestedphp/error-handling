@@ -5,10 +5,10 @@ namespace WellRESTed\HttpExceptions\Test\Unit;
 use Exception;
 use Prophecy\Argument;
 use WellRESTed\HttpExceptions\HttpException;
-use WellRESTed\Middleware\Catcher;
+use WellRESTed\ErrorHandling\Catcher;
 
 /**
- * @coversDefaultClass WellRESTed\Middleware\Catcher
+ * @coversDefaultClass WellRESTed\ErrorHandling\Catcher
  */
 class CatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -110,7 +110,7 @@ class CatcherTest extends \PHPUnit_Framework_TestCase
     {
         $subclassResponse = $this->prophesize('Psr\Http\Message\ResponseInterface')->reveal();
 
-        $catcher = $this->getMockBuilder('WellRESTed\Middleware\Catcher')
+        $catcher = $this->getMockBuilder('WellRESTed\ErrorHandling\Catcher')
             ->setConstructorArgs([$this->dispatcher->reveal()])
             ->setMethods(["getResponseForException"])
             ->getMock();

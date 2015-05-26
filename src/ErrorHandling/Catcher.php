@@ -1,6 +1,6 @@
 <?php
 
-namespace WellRESTed\Middleware;
+namespace WellRESTed\ErrorHandling;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface;
