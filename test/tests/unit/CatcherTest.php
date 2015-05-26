@@ -54,43 +54,6 @@ class CatcherTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::__invoke
-     * @covers ::getResponseForHttpException
-     */
-    public function testHttpExceptionSetsResponseBodyToContainExceptionMessage()
-    {
-        $code = 404;
-        $message = "404 Not Found";
-
-        $catcher = new Catcher($this->dispatcher->reveal());
-        $catcher->add(function ($request, $response, $next) use ($message, $code) {
-            throw new HttpException($message, $code);
-        });
-        $catcher($this->request->reveal(), $this->response->reveal(), $this->next);
-        $this->response->withBody(Argument::that(function ($body) use ($message) {
-            $body = (string) $body;
-            return strpos($body, $message) !== false;
-        }))->shouldHaveBeenCalled();
-    }
-
-    /**
-     * @covers ::__invoke
-     * @covers ::getResponseForHttpException
-     */
-    public function testDefaultResponseAddsContentTypeTextHtmlHeader()
-    {
-        $code = 404;
-        $message = "404 Not Found";
-
-        $catcher = new Catcher($this->dispatcher->reveal());
-        $catcher->add(function ($request, $response, $next) use ($message, $code) {
-            throw new HttpException($message, $code);
-        });
-        $catcher($this->request->reveal(), $this->response->reveal(), $this->next);
-        $this->response->withHeader("Content-type", "text/html")->shouldHaveBeenCalled();
-    }
-
-    /**
-     * @covers ::__invoke
      * @covers ::getResponseForException
      * @expectedException \Exception
      */

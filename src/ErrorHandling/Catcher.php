@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WellRESTed\Dispatching\DispatchStack;
 use WellRESTed\HttpExceptions\HttpException;
-use WellRESTed\Message\Stream;
 
 class Catcher extends DispatchStack
 {
@@ -32,9 +31,7 @@ class Catcher extends DispatchStack
         ResponseInterface $response,
         $next
     ) {
-        return $response->withStatus($e->getCode())
-            ->withHeader("Content-type", "text/html")
-            ->withBody(new Stream("<h1>" . $e->getMessage() . "</h1>"));
+        return $response->withStatus($e->getCode());
     }
 
     protected function getResponseForException(
