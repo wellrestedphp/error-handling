@@ -3,19 +3,19 @@
 namespace WellRESTed\HttpExceptions\Test\Unit;
 
 use Prophecy\Argument;
-use WellRESTed\ErrorHandling\HtmlErrorMessageProvider;
+use WellRESTed\ErrorHandling\HtmlErrorHandler;
 
 /**
- * @coversDefaultClass WellRESTed\ErrorHandling\HtmlErrorMessageProvider
- * @uses WellRESTed\ErrorHandling\ErrorMessageProvider
+ * @covers WellRESTed\ErrorHandling\HtmlErrorHandler
+ * @uses WellRESTed\ErrorHandling\ErrorHandler
+ * @uses WellRESTed\Message\Stream
  */
-class HtmlErrorMessageProviderTest extends \PHPUnit_Framework_TestCase
+class HtmlErrorHandlerTest extends \PHPUnit_Framework_TestCase
 {
     private $body;
     private $request;
     private $response;
     private $next;
-    private $dispatcher;
 
     public function setUp()
     {
@@ -28,23 +28,14 @@ class HtmlErrorMessageProviderTest extends \PHPUnit_Framework_TestCase
         $this->response->getStatusCode()->willReturn(400);
         $this->response->getReasonPhrase()->willReturn("Bad Request");
         $this->response->getBody()->willReturn($this->body->reveal());
-        $this->response->withBody(Argument::any())->willReturn($this->response->reveal());
         $this->response->withStatus(Argument::cetera())->willReturn($this->response->reveal());
         $this->response->withHeader(Argument::cetera())->willReturn($this->response->reveal());
         $this->response->withBody(Argument::any())->willReturn($this->response->reveal());
         $this->next = function ($request, $response) {
             return $response;
         };
-        $this->dispatcher = $this->prophesize('WellRESTed\Dispatching\DispatcherInterface');
-        $this->dispatcher->dispatch(Argument::cetera())->will(function ($args) {
-            list($middleware, $request, $response, $next) = $args;
-            return $middleware($request, $response, $next);
-        });
     }
 
-    /**
-     * @covers ::getResponse
-     */
     public function testSetsBodyBasedOnStatusAndReasonPhrase()
     {
         $statusCode = 404;
@@ -53,8 +44,8 @@ class HtmlErrorMessageProviderTest extends \PHPUnit_Framework_TestCase
         $this->response->getStatusCode()->willReturn($statusCode);
         $this->response->getReasonPhrase()->willReturn($reasonPhrase);
 
-        $provider = new HtmlErrorMessageProvider();
-        $provider($this->request->reveal(), $this->response->reveal(), $this->next);
+        $handler = new HtmlErrorHandler();
+        $handler($this->request->reveal(), $this->response->reveal(), $this->next);
 
         $this->response->withBody(Argument::that(function ($body) use ($statusCode, $reasonPhrase) {
             return (string) $body === "<h1>$statusCode $reasonPhrase</h1>";
@@ -62,12 +53,12 @@ class HtmlErrorMessageProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::getResponse
+     * @coversNothing
      */
-    public function testSetsContentTypeToHtml()
+    public function testSetsContentTypeToPlainText()
     {
-        $provider = new HtmlErrorMessageProvider();
-        $provider($this->request->reveal(), $this->response->reveal(), $this->next);
+        $handler = new HtmlErrorHandler();
+        $handler($this->request->reveal(), $this->response->reveal(), $this->next);
         $this->response->withHeader("Content-type", "text/html")->shouldHaveBeenCalled();
     }
 }
