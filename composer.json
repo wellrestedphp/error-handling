@@ -1,6 +1,6 @@
 {
     "name": "wellrested/error-handling",
-    "description": "Convert exceptions thrown in middleware into responses",
+    "description": "Classes to facilitate error handling with WellRESTed.",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -9,16 +9,10 @@
             "email": "pjdietz@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/wellrestedphp/http-exceptions"
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
         "wellrested/wellrested": "dev-master",
-        "wellrested/http-exceptions": "dev-master"
+        "wellrested/http-exceptions": "^1.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.6"
