@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "wellrested/wellrested": "dev-master",
+        "wellrested/wellrested": "^3.0.0",
         "wellrested/http-exceptions": "^1.0.0"
     },
     "require-dev": {
